@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus - Innovate Your Future</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-dark: #0a192f;
+            --secondary-dark: #112240;
+            --accent-teal: #64ffda;
+            --accent-red: #ff6b6b;
+            --accent-purple: #7c3aed;
+            --accent-blue: #4d5bce;
+            --text-primary: #e6f1ff;
+            --text-secondary: #a8b2d1;
+            --text-muted: #8892b0;
+            --card-bg: rgba(17, 34, 64, 0.5);
+            --card-bg-light: rgba(100, 255, 218, 0.05);
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.3);
+            --section-spacing: 80px; /* Reduced from 100px */
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 80px;
+            position: relative;
+            min-height: 100vh;
+            background: var(--primary-dark);
+        }
+        
+        /* Live Hero Background */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .gradient-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 50%, var(--accent-blue) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(100, 255, 218, 0.15);
+            animation: floatParticle 20s infinite linear;
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.8rem; /* Reduced from 1rem */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 2rem; /* Reduced from 2.5rem */
+        }
+        
+        h3 {
+            font-size: clamp(1.3rem, 3vw, 1.5rem);
+        }
+        
+        p {
+            margin-bottom: 1.2rem; /* Reduced from 1.5rem */
+            color: var(--text-secondary);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        /* Layout Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: var(--section-spacing) 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 25px; /* Reduced from 30px */
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Header - Fixed and Sticky */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-teal);
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-teal);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover::after {
+            transform: translateX(0);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px; /* Reduced from 30px */
+        }
+        
+        nav ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
+        }
+        
+        nav ul li a:hover, 
+        nav ul li a.active {
+            color: var(--accent-teal);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: var(--transition);
+        }
+        
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            width: 100%;
+        }
+        
+        /* Mobile menu button */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .mobile-menu-toggle span {
+            width: 100%;
+            height: 2px;
+            background: var(--accent-teal);
+            transition: var(--transition);
+            transform-origin: center;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px; /* Reduced from 60px */
+            align-items: center;
+            min-height: 85vh; /* Reduced from 90vh */
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            padding-right: 20px; /* Reduced from 30px */
+        }
+        
+        .hero-heading {
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
+            margin-bottom: 1.2rem; /* Reduced from 1.5rem */
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+            line-height: 1.1;
+        }
+        
+        .type-text {
+            color: var(--accent-teal);
+            border-right: 2px solid var(--accent-teal);
+            padding-right: 4px;
+            animation: blink 0.7s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { border-color: var(--accent-teal); }
+            50% { border-color: transparent; }
+        }
+        
+        .hero-subhead {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-bottom: 2rem; /* Reduced from 2.5rem */
+            color: var(--text-secondary);
+            animation: fadeInUp 1s ease 0.2s both;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+        
+        /* NEW: Hero Stats */
+        .hero-stats {
+            display: flex;
+            gap: 25px; /* Reduced from 30px */
+            margin: 25px 0; /* Reduced from 30px 0 */
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--accent-teal);
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        /* CTA Buttons */
+        .cta-container {
+            display: flex;
+            gap: 15px; /* Reduced from 20px */
+            margin-bottom: 1.2rem; /* Reduced from 1.5rem */
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px; /* Reduced from 16px 38px */
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--accent-teal);
+            color: var(--accent-teal);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+        }
+        
+        .cta-subtext {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+        
+        /* Abstract Shapes */
+        .hero-image {
+            position: relative;
+            height: 450px; /* Reduced from 480px */
+            animation: fadeInRight 1s ease;
+        }
+        
+        .shapes-container {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            border-radius: var(--border-radius-lg);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 30%, var(--accent-teal) 100%);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.7;
+            filter: blur(25px);
+            animation: pulse 8s infinite ease-in-out;
+        }
+        
+        .shape-1 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, var(--accent-teal), var(--secondary-dark));
+            top: -50px;
+            left: -50px;
+            animation-delay: 0s;
+        }
+        
+        .shape-2 {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(45deg, var(--accent-red), var(--accent-teal));
+            bottom: -30px;
+            right: 80px;
+            animation-delay: -2s;
+        }
+        
+        .shape-3 {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-teal));
+            top: 150px;
+            right: -30px;
+            animation-delay: -4s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        /* Social Proof Section */
+        .social-proof {
+            background: rgba(10, 25, 47, 0.7);
+            padding: 70px 0; /* Reduced from 80px 0 */
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .proof-text {
+            color: var(--text-secondary);
+            margin-bottom: 40px; /* Reduced from 50px */
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .client-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px; /* Reduced from 40px */
+            margin-bottom: 35px; /* Reduced from 40px */
+        }
+        
+        .client-logo {
+            opacity: 0.8;
+            transition: var(--transition);
+            font-weight: 700;
+            color: var(--accent-teal);
+            font-size: 1.2rem;
+            padding: 10px 20px; /* Reduced from 12px 24px */
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+        
+        .client-logo:hover {
+            opacity: 1;
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* NEW: Awards & Recognition */
+        .awards {
+            display: flex;
+            justify-content: center;
+            gap: 25px; /* Reduced from 30px */
+            margin-bottom: 50px; /* Reduced from 60px */
+            flex-wrap: wrap;
+        }
+        
+        .award-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding: 10px 18px; /* Reduced from 12px 20px */
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .award-item i {
+            color: var(--accent-teal);
+        }
+        
+        .testimonial {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            padding: 40px; /* Reduced from 50px */
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial::before {
+            content: """;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 120px;
+            color: var(--accent-teal);
+            opacity: 0.1;
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-text {
+            font-size: 1.3rem; /* Reduced from 1.4rem */
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 20px; /* Reduced from 25px */
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            color: var(--accent-teal);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        /* Trust Indicators */
+        .trust-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 30px; /* Reduced from 35px */
+            margin: 40px 0; /* Reduced from 50px 0 */
+            flex-wrap: wrap;
+        }
+        
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--accent-teal);
+            font-size: 0.95rem;
+            padding: 15px 20px; /* Reduced from 18px 24px */
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .trust-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .trust-item i {
+            font-size: 1.2rem;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: var(--section-spacing) 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem; /* Reduced from 3.5rem */
+        }
+        
+        .feature {
+            background: var(--card-bg);
+            padding: 30px 25px; /* Reduced from 35px 30px */
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            height: 100%;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-purple));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .feature:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            background: var(--card-bg-light);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem; /* Reduced from 2.8rem */
+            color: var(--accent-teal);
+            margin-bottom: 20px; /* Reduced from 25px */
+            transition: var(--transition);
+        }
+        
+        .feature:hover .feature-icon {
+            transform: scale(1.1);
+            color: var(--accent-purple);
+        }
+        
+        .feature-title {
+            margin-bottom: 15px; /* Reduced from 18px */
+            font-size: 1.3rem; /* Reduced from 1.4rem */
+        }
+        
+        .feature-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* NEW: Feature Benefits */
+        .feature-benefits {
+            margin-top: 18px; /* Reduced from 20px */
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px; /* Reduced from 10px */
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .benefit-item i {
+            color: var(--accent-teal);
+            font-size: 0.8rem;
+        }
+        
+        /* NEW: How It Works Section */
+        .how-it-works {
+            background: rgba(10, 25, 47, 0.7);
+            padding: 70px 0; /* Reduced from 80px 0 */
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            margin: var(--section-spacing) 0;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 35px; /* Reduced from 40px */
+            margin-top: 45px; /* Reduced from 50px */
+        }
+        
+        .step {
+            text-align: center;
+            padding: 25px; /* Reduced from 30px */
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px; /* Reduced from 20px */
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        
+        /* NEW: FAQ Section */
+        .faq-section {
+            padding: var(--section-spacing) 0;
+        }
+        
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px; /* Reduced from 30px */
+            margin-top: 45px; /* Reduced from 50px */
+        }
+        
+        .faq-item {
+            background: var(--card-bg);
+            padding: 20px; /* Reduced from 25px */
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            margin-bottom: 12px; /* Reduced from 15px */
+            color: var(--accent-teal);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .faq-question i {
+            font-size: 1.2rem;
+        }
+        
+        .faq-answer {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* NEW: Page Section Styles */
+        .page-section {
+            display: none;
+            min-height: 80vh;
+            padding: 80px 0; /* Reduced from 100px 0 */
+        }
+        
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* NEW: Contact Page Styles */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px; /* Reduced from 50px */
+            margin-top: 35px; /* Reduced from 40px */
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Reduced from 25px */
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 18px; /* Reduced from 20px */
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .contact-item i {
+            font-size: 1.4rem; /* Reduced from 1.5rem */
+            color: var(--accent-teal);
+            margin-top: 5px;
+        }
+        
+        .contact-form {
+            background: var(--card-bg);
+            padding: 35px; /* Reduced from 40px */
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-group {
+            margin-bottom: 20px; /* Reduced from 25px */
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px; /* Reduced from 10px */
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 18px; /* Reduced from 16px 20px */
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 160px; /* Reduced from 180px */
+            resize: vertical;
+        }
+        
+        .map-placeholder {
+            height: 280px; /* Reduced from 300px */
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 35px; /* Reduced from 40px */
+            backdrop-filter: blur(10px);
+        }
+        
+        /* NEW: About Page Styles */
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px; /* Reduced from 30px */
+            margin-top: 45px; /* Reduced from 50px */
+        }
+        
+        .team-member {
+            background: var(--card-bg);
+            padding: 25px; /* Reduced from 30px */
+            border-radius: var(--border-radius);
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .team-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 15px; /* Reduced from 20px */
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        /* NEW: Services Page Styles */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px; /* Reduced from 40px */
+            margin-top: 45px; /* Reduced from 50px */
+        }
+        
+        .service-card {
+            background: var(--card-bg);
+            padding: 35px 25px; /* Reduced from 40px 30px */
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-purple));
+        }
+        
+        .service-icon {
+            font-size: 2.3rem; /* Reduced from 2.5rem */
+            color: var(--accent-teal);
+            margin-bottom: 15px; /* Reduced from 20px */
+        }
+        
+        /* NEW: Footer Styles */
+        footer {
+            background: var(--primary-dark);
+            padding: 70px 0 25px; /* Reduced from 80px 0 30px */
+            border-top: 1px solid var(--glass-border);
+            margin-top: 80px; /* Reduced from 100px */
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px; /* Reduced from 50px */
+            margin-bottom: 50px; /* Reduced from 60px */
+        }
+        
+        .footer-col h3 {
+            font-size: 1.2rem; /* Reduced from 1.3rem */
+            margin-bottom: 20px; /* Reduced from 25px */
+            color: var(--accent-teal);
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-teal);
+            margin-bottom: 15px; /* Reduced from 20px */
+            display: block;
+        }
+        
+        .footer-about {
+            color: var(--text-secondary);
+            margin-bottom: 20px; /* Reduced from 25px */
+            line-height: 1.7;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px; /* Reduced from 12px */
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-teal);
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 12px; /* Reduced from 15px */
+            margin-top: 15px; /* Reduced from 20px */
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px; /* Reduced from 45px */
+            height: 40px; /* Reduced from 45px */
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            transition: var(--transition);
+            font-size: 1.1rem; /* Reduced from 1.2rem */
+        }
+        
+        .social-links a:hover {
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 25px; /* Reduced from 30px */
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .hero-bg, .type-text {
+                display: none;
+            }
+            
+            .hero-heading::after {
+                content: "Innovative";
+                color: var(--accent-teal);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero {
+                grid-template-columns: 1fr 1fr;
+                gap: 45px; /* Reduced from 50px */
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 35px; /* Reduced from 40px */
+            }
+            
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 45px; /* Reduced from 50px */
+                text-align: center;
+            }
+            
+            .hero-content {
+                padding-right: 0;
+            }
+            
+            .hero-subhead {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .hero-image {
+                height: 380px; /* Reduced from 400px */
+                order: -1;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            nav ul {
+                gap: 18px; /* Reduced from 20px */
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.3rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 70px 0; /* Reduced from 80px 0 */
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            nav ul {
+                position: fixed;
+                flex-direction: column;
+                background: var(--primary-dark);
+                top: 80px;
+                left: 0;
+                width: 100%;
+                padding: 25px; /* Reduced from 30px */
+                gap: 18px; /* Reduced from 20px */
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                box-shadow: var(--shadow);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid var(--glass-border);
+                z-index: 999;
+            }
+            
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .trust-indicators {
+                flex-direction: column;
+                align-items: center;
+                gap: 18px; /* Reduced from 20px */
+            }
+            
+            .cta-container {
+                justify-content: center;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 35px; /* Reduced from 40px */
+            }
+            
+            .client-logos {
+                gap: 18px; /* Reduced from 20px */
+            }
+            
+            .client-logo {
+                font-size: 1rem;
+                padding: 8px 16px; /* Reduced from 10px 18px */
+            }
+            
+            .testimonial {
+                padding: 25px; /* Reduced from 30px */
+            }
+            
+            .testimonial-text {
+                font-size: 1.2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .awards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-heading {
+                font-size: 2.5rem;
+            }
+            
+            .btn {
+                padding: 12px 24px; /* Reduced from 14px 28px */
+                width: 100%;
+            }
+            
+            .cta-container {
+                flex-direction: column;
+            }
+            
+            .testimonial {
+                padding: 20px 15px; /* Reduced from 25px 20px */
+            }
+            
+            .testimonial-text {
+                font-size: 1.1rem;
+            }
+            
+            .feature {
+                padding: 20px 15px; /* Reduced from 25px 20px */
+            }
+            
+            .feature-icon {
+                font-size: 2rem; /* Reduced from 2.2rem */
+            }
+            
+            .contact-form {
+                padding: 20px; /* Reduced from 25px */
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px; /* Reduced from 15px */
+            }
+            
+            .stat-item {
+                align-items: center;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .trust-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 6px; /* Reduced from 8px */
+            }
+            
+            .client-logo {
+                font-size: 0.9rem;
+                padding: 6px 12px; /* Reduced from 8px 14px */
+            }
+            
+            .hero-image {
+                height: 320px; /* Reduced from 350px */
+            }
+            
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Live Hero Background -->
+    <div class="hero-bg">
+        <div class="gradient-bg"></div>
+        <div class="particles-container" id="particles"></div>
+    </div>
+
+    <!-- Fixed Header -->
+    <header>
+        <div class="header-container">
+            <a href="#home" class="logo" data-page="home-page">NEXUS</a>
+            <button class="mobile-menu-toggle" aria-expanded="false" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active" data-page="home-page">Home</a></li>
+                    <li><a href="#about" data-page="about-page">About Us</a></li>
+                    <li><a href="#services" data-page="services-page">Services</a></li>
+                    <li><a href="#contact" data-page="contact-page">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home-page" class="page-section active">
+        <div class="container">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-heading">Innovate Your <span class="type-text" id="type-text"></span></h1>
+                    <p class="hero-subhead">Transform your business with cutting-edge solutions designed for tomorrow's challenges. Our platform empowers growth through innovation.</p>
+                    
+                    <!-- NEW: Hero Stats -->
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="10000">0</span>
+                            <span class="stat-label">Active Users</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="99.9">0</span>
+                            <span class="stat-label">Uptime</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="24">0</span>
+                            <span class="stat-label">Support</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-container">
+                        <a href="#services" class="btn btn-primary" data-page="services-page">Explore Our Services</a>
+                        <a href="#contact" class="btn btn-secondary" data-page="contact-page">Get In Touch</a>
+                    </div>
+                    <p class="cta-subtext">No credit card required • 14-day free trial</p>
+                </div>
+                <div class="hero-image">
+                    <div class="shapes-container" aria-hidden="true">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Proof Section -->
+        <div class="social-proof">
+            <div class="container">
+                <p class="proof-text text-center">Trusted by industry leaders</p>
+                <div class="client-logos">
+                    <div class="client-logo" aria-label="Microsoft">Microsoft</div>
+                    <div class="client-logo" aria-label="Google">Google</div>
+                    <div class="client-logo" aria-label="Amazon">Amazon</div>
+                    <div class="client-logo" aria-label="Tesla">Tesla</div>
+                </div>
+                
+                <!-- NEW: Awards & Recognition -->
+                <div class="awards">
+                    <div class="award-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Best Innovation 2023</span>
+                    </div>
+                    <div class="award-item">
+                        <i class="fas fa-award"></i>
+                        <span>Top Tech Solution</span>
+                    </div>
+                    <div class="award-item">
+                        <i class="fas fa-star"></i>
+                        <span>Customer Excellence</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-text text-center">"Nexus transformed our data infrastructure, resulting in a 34% increase in operational efficiency."</p>
+                    <p class="testimonial-author text-center">— Sarah Johnson, CTO at TechCorp</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Preview -->
+        <div class="container">
+            <div class="features section">
+                <h2 class="section-title text-center">Our Solutions</h2>
+                
+                <div class="trust-indicators">
+                    <div class="trust-item">
+                        <i class="fas fa-lock" aria-hidden="true"></i>
+                        <span>Bank-level security</span>
+                    </div>
+                    <div class="trust-item">
+                        <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        <span>30-day money-back guarantee</span>
+                    </div>
+                    <div class="trust-item">
+                        <i class="fas fa-clock" aria-hidden="true"></i>
+                        <span>Limited time offer</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-3">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="feature-title">AI Integration</h3>
+                        <p class="feature-desc">Leverage the power of artificial intelligence to optimize your business processes and gain valuable insights.</p>
+                        
+                        <!-- NEW: Feature Benefits -->
+                        <div class="feature-benefits">
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Predictive analytics</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Automated workflows</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Intelligent recommendations</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Data Analytics</h3>
+                        <p class="feature-desc">Transform raw data into actionable intelligence with our advanced analytics platform.</p>
+                        
+                        <!-- NEW: Feature Benefits -->
+                        <div class="feature-benefits">
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Real-time dashboards</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Custom reporting</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Data visualization</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Advanced Security</h3>
+                        <p class="feature-desc">Protect your assets with our enterprise-grade security solutions and protocols.</p>
+                        
+                        <!-- NEW: Feature Benefits -->
+                        <div class="feature-benefits">
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>End-to-end encryption</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Multi-factor authentication</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Regular security audits</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center" style="margin-top: 45px;"> <!-- Reduced from 50px -->
+                    <a href="#services" class="btn btn-secondary" data-page="services-page">View All Services</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- NEW: How It Works Section -->
+        <div class="how-it-works">
+            <div class="container">
+                <h2 class="section-title text-center">How It Works</h2>
+                <p class="text-center" style="max-width: 700px; margin: 0 auto;">Getting started with Nexus is simple and straightforward. Our process is designed for maximum efficiency.</p>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Sign Up</h3>
+                        <p>Create your account in minutes with our streamlined onboarding process.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Customize</h3>
+                        <p>Tailor the platform to your specific business needs and requirements.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Launch</h3>
+                        <p>Go live with your optimized systems and start seeing results immediately.</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Grow</h3>
+                        <p>Scale your operations with our flexible, growing platform capabilities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- NEW: FAQ Section -->
+        <div class="faq-section">
+            <div class="container">
+                <h2 class="section-title text-center">Frequently Asked Questions</h2>
+                <p class="text-center" style="max-width: 700px; margin: 0 auto 45px;">Find answers to common questions about our platform and services.</p> <!-- Reduced from 50px -->
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <i class="fas fa-question-circle"></i>
+                            How long does implementation take?
+                        </div>
+                        <p class="faq-answer">Most clients are fully operational within 2-4 weeks, depending on the complexity of their systems and requirements.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <i class="fas fa-question-circle"></i>
+                            Is there a free trial available?
+                        </div>
+                        <p class="faq-answer">Yes, we offer a 14-day free trial with full access to all features. No credit card required.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <i class="fas fa-question-circle"></i>
+                            What support options are available?
+                        </div>
+                        <p class="faq-answer">We provide 24/7 customer support via email, chat, and phone for all enterprise plans.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <i class="fas fa-question-circle"></i>
+                            Can I cancel anytime?
+                        </div>
+                        <p class="faq-answer">Yes, you can cancel your subscription at any time with no cancellation fees.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: About Us Page -->
+    <section id="about-page" class="page-section">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title text-center">About Nexus</h2>
+                <p class="text-center">We are a team of passionate innovators dedicated to transforming businesses through cutting-edge technology solutions.</p>
+                
+                <div class="grid" style="gap: 45px; margin-top: 55px;"> <!-- Reduced from 50px and 60px -->
+                    <div>
+                        <h3><i class="fas fa-bullseye" style="color: var(--accent-teal); margin-right: 10px;"></i>Our Mission</h3>
+                        <p>To empower businesses of all sizes with innovative technology solutions that drive growth, efficiency, and competitive advantage in an increasingly digital world.</p>
+                    </div>
+                    
+                    <div>
+                        <h3><i class="fas fa-eye" style="color: var(--accent-teal); margin-right: 10px;"></i>Our Vision</h3>
+                        <p>To create a future where technology seamlessly enhances human potential and business capabilities, making advanced digital transformation accessible to all.</p>
+                    </div>
+                </div>
+                
+                <h3 class="text-center" style="margin: 55px 0 35px;"><i class="fas fa-users" style="color: var(--accent-teal); margin-right: 10px;"></i>Meet Our Team</h3> <!-- Reduced from 60px 0 40px -->
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-img">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>Sarah Johnson</h4>
+                        <p>CEO & Founder</p>
+                        <p class="text-center" style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">
+                            <i class="fas fa-quote-left" style="color: var(--accent-teal); font-size: 0.8rem;"></i>
+                            Leading innovation since 2015
+                        </p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="team-img">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>Michael Chen</h4>
+                        <p>CTO</p>
+                        <p class="text-center" style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">
+                            <i class="fas fa-quote-left" style="color: var(--accent-teal); font-size: 0.8rem;"></i>
+                            Tech visionary with 15+ years experience
+                        </p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="team-img">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>Emily Rodriguez</h4>
+                        <p>Lead Developer</p>
+                        <p class="text-center" style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">
+                            <i class="fas fa-quote-left" style="color: var(--accent-teal); font-size: 0.8rem;"></i>
+                            Full-stack expertise
+                        </p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="team-img">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h4>David Kim</h4>
+                        <p>Product Manager</p>
+                        <p class="text-center" style="margin-top: 10px; color: var(--text-muted); font-size: 0.9rem;">
+                            <i class="fas fa-quote-left" style="color: var(--accent-teal); font-size: 0.8rem;"></i>
+                            User-focused design advocate
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Services Page -->
+    <section id="services-page" class="page-section">
+        <div class="container">
+            <h2 class="section-title text-center">Our Services</h2>
+            <p class="text-center" style="max-width: 700px; margin: 0 auto 45px;">We offer a comprehensive suite of digital transformation services designed to propel your business into the future.</p> <!-- Reduced from 50px -->
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Integration</h3>
+                    <p>Implement cutting-edge artificial intelligence solutions to automate processes, gain insights from your data, and enhance decision-making capabilities.</p>
+                    <div class="feature-benefits" style="margin-top: 15px;">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Custom AI models</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Machine learning pipelines</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Data Analytics</h3>
+                    <p>Transform raw data into actionable intelligence with our advanced analytics platforms and visualization tools.</p>
+                    <div class="feature-benefits" style="margin-top: 15px;">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Real-time dashboards</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Predictive modeling</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Cybersecurity</h3>
+                    <p>Protect your digital assets with enterprise-grade security solutions, threat detection, and compliance management.</p>
+                    <div class="feature-benefits" style="margin-top: 15px;">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Vulnerability assessment</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>24/7 monitoring</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Cloud Solutions</h3>
+                    <p>Migrate to the cloud with confidence using our seamless integration, optimization, and management services.</p>
+                    <div class="feature-benefits" style="margin-top: 15px;">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Multi-cloud strategy</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Cost optimization</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>App Development</h3>
+                    <p>Create powerful, user-friendly applications for web and mobile platforms with our expert development team.</p>
+                    <div class="feature-benefits" style="margin-top: 15px;">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Native & cross-platform</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>UI/UX focused design</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Automation</h3>
+                    <p>Streamline operations and reduce manual workload with our custom workflow automation solutions.</p>
+                    <div class="feature-benefits" style="margin-top: 15px;">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Process mapping</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>RPA implementation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Contact Us Page -->
+    <section id="contact-page" class="page-section">
+        <div class="container">
+            <h2 class="section-title text-center">Get In Touch</h2>
+            <p class="text-center" style="max-width: 700px; margin: 0 auto 45px;">Have questions or want to learn more about how Nexus can transform your business? Reach out to our team.</p> <!-- Reduced from 50px -->
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Our Location</h3>
+                            <p>123 Innovation Drive, Tech City, TC 12345</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Phone Number</h3>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email Address</h3>
+                            <p>info@nexus.example</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Business Hours</h3>
+                            <p>Monday - Friday: 9AM - 5PM</p>
+                            <p style="margin-top: 5px; color: var(--text-muted);">Weekend support available for enterprise clients</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="map-placeholder">
+                <i class="fas fa-map-marked-alt" style="font-size: 2rem; color: var(--accent-teal);"></i>
+                <p style="margin-left: 15px;">Interactive Map Would Appear Here</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <span class="footer-logo">NEXUS</span>
+                    <p class="footer-about">Transforming businesses with cutting-edge technology solutions and innovative approaches to digital challenges.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home" data-page="home-page">Home</a></li>
+                        <li><a href="#about" data-page="about-page">About Us</a></li>
+                        <li><a href="#services" data-page="services-page">Services</a></li>
+                        <li><a href="#contact" data-page="contact-page">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#services" data-page="services-page">AI Integration</a></li>
+                        <li><a href="#services" data-page="services-page">Data Analytics</a></li>
+                        <li><a href="#services" data-page="services-page">Cybersecurity</a></li>
+                        <li><a href="#services" data-page="services-page">Cloud Solutions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Innovation Drive, Tech City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@nexus.example</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 9AM - 5PM</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Nexus. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const nav = document.querySelector('nav ul');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    const expanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !expanded);
+                    this.classList.toggle('active');
+                    nav.classList.toggle('active');
+                });
+            }
+            
+            // Auto-type animation
+            const typeElement = document.getElementById('type-text');
+            if (typeElement && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const words = ['Future', 'Business', 'Vision', 'Success'];
+                let wordIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+                let typingSpeed = 100;
+                
+                function type() {
+                    const currentWord = words[wordIndex];
+                    
+                    if (isDeleting) {
+                        // Remove characters
+                        typeElement.textContent = currentWord.substring(0, charIndex - 1);
+                        charIndex--;
+                        typingSpeed = 50;
+                    } else {
+                        // Add characters
+                        typeElement.textContent = currentWord.substring(0, charIndex + 1);
+                        charIndex++;
+                        typingSpeed = 100;
+                    }
+                    
+                    // Determine next action
+                    if (!isDeleting && charIndex === currentWord.length) {
+                        // Pause at end of word
+                        typingSpeed = 1500;
+                        isDeleting = true;
+                    } else if (isDeleting && charIndex === 0) {
+                        // Move to next word
+                        isDeleting = false;
+                        wordIndex = (wordIndex + 1) % words.length;
+                        typingSpeed = 500;
+                    }
+                    
+                    setTimeout(type, typingSpeed);
+                }
+                
+                // Start animation
+                setTimeout(type, 1000);
+            }
+            
+            // Create particles for background
+            function createParticles() {
+                const container = document.getElementById('particles');
+                if (!container) return;
+                
+                const particleCount = window.innerWidth < 768 ? 20 : 40;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Random size between 5 and 15px
+                    const size = Math.random() * 10 + 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Random position
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    
+                    // Random animation delay
+                    particle.style.animationDelay = `${Math.random() * 20}s`;
+                    
+                    container.appendChild(particle);
+                }
+            }
+            
+            createParticles();
+            
+            // Number counter animation with Intersection Observer
+            function setupCounterAnimation() {
+                const statNumbers = document.querySelectorAll('.stat-number');
+                const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                
+                if (reducedMotion) {
+                    // If reduced motion is preferred, set the final values immediately
+                    statNumbers.forEach(stat => {
+                        const target = parseFloat(stat.getAttribute('data-target'));
+                        stat.textContent = target === 24 ? '24/7' : target.toLocaleString();
+                    });
+                    return;
+                }
+                
+                const observerOptions = {
+                    threshold: 0.5,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const stat = entry.target;
+                            const target = parseFloat(stat.getAttribute('data-target'));
+                            const duration = 2500; // 2.5 seconds
+                            const frameDuration = 1000 / 60; // 60fps
+                            const totalFrames = Math.round(duration / frameDuration);
+                            let frame = 0;
+                            
+                            const counter = setInterval(() => {
+                                frame++;
+                                const progress = frame / totalFrames;
+                                const currentValue = Math.round(target * progress);
+                                
+                                if (target === 24) {
+                                    // Special case for 24/7 support
+                                    if (currentValue >= 24) {
+                                        stat.textContent = '24/7';
+                                        clearInterval(counter);
+                                    } else {
+                                        stat.textContent = Math.round(currentValue);
+                                    }
+                                } else if (target === 99.9) {
+                                    // For percentage with decimal
+                                    const value = (target * progress).toFixed(1);
+                                    stat.textContent = `${value}%`;
+                                    if (progress >= 1) clearInterval(counter);
+                                } else {
+                                    // For whole numbers
+                                    stat.textContent = currentValue.toLocaleString();
+                                    if (progress >= 1) clearInterval(counter);
+                                }
+                            }, frameDuration);
+                            
+                            observer.unobserve(stat);
+                        }
+                    });
+                }, observerOptions);
+                
+                statNumbers.forEach(stat => {
+                    observer.observe(stat);
+                });
+            }
+            
+            // SPA Navigation Functionality
+            const pageSections = document.querySelectorAll('.page-section');
+            const navLinks = document.querySelectorAll('nav a, .footer-links a, .cta-container a');
+            
+            function showPage(pageId) {
+                // Hide all pages
+                pageSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the selected page
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Initialize counter animation if we're on the home page
+                    if (pageId === 'home-page') {
+                        setTimeout(setupCounterAnimation, 300);
+                    }
+                }
+                
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Update URL with History API
+                const pageName = pageId.replace('-page', '');
+                window.history.pushState({}, '', `#${pageName}`);
+                
+                // Close mobile menu if open
+                if (nav.classList.contains('active')) {
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    menuToggle.classList.remove('active');
+                    nav.classList.remove('active');
+                }
+            }
+            
+            // Set up navigation
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    if (pageId) {
+                        showPage(pageId);
+                    }
+                });
+            });
+            
+            // Handle initial hash URL
+            if (window.location.hash) {
+                const targetPage = document.querySelector(`a[href="${window.location.hash}"]`);
+                if (targetPage && targetPage.getAttribute('data-page')) {
+                    showPage(targetPage.getAttribute('data-page'));
+                }
+            }
+            
+            // Form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your message! We will get back to you soon.');
+                    contactForm.reset();
+                });
+            }
+            
+            // Intersection Observer for section animations
+            const sections = document.querySelectorAll('.section');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Initialize counter animation on page load if home page is active
+            if (document.getElementById('home-page').classList.contains('active')) {
+                setupCounterAnimation();
+            }
+        });
+    </script>
+</body>
+</html>
