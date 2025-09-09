@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فروشگاه موبایل ایران</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 0.3s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .product-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .cart-notification {
+            animation: cartNotify 0.5s ease;
+        }
+        
+        @keyframes cartNotify {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .auth-modal {
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold">موبایل‌شاپ</a>
+                </div>
+                
+                <div class="hidden md:flex space-x-4 space-x-reverse">
+                    <a href="#" class="px-3 py-2 hover:bg-blue-700 rounded-lg transition-all">خانه</a>
+                    <a href="#products" class="px-3 py-2 hover:bg-blue-700 rounded-lg transition-all">محصولات</a>
+                    <a href="#about" class="px-3 py-2 hover:bg-blue-700 rounded-lg transition-all">درباره ما</a>
+                    <a href="#contact" class="px-3 py-2 hover:bg-blue-700 rounded-lg transition-all">تماس با ما</a>
+                </div>
+                
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <button id="auth-btn" class="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg transition-all">
+                        <i class="fas fa-user ml-1"></i>
+                        <span>ورود / ثبت‌نام</span>
+                    </button>
+                    <button id="cart-btn" class="relative bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg transition-all">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count" class="absolute -top-2 -left-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                    </button>
+                </div>
+                
+                <button id="mobile-menu-btn" class="md:hidden text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class="hidden pb-4">
+                <a href="#" class="block px-3 py-2 hover:bg-blue-700 rounded-lg transition-all">خانه</a>
+                <a href="#products" class="block px-3 py-2 hover:bg-blue-700 rounded-lg transition-all">محصولات</a>
+                <a href="#about" class="block px-3 py-2 hover:bg-blue-700 rounded-lg transition-all">درباره ما</a>
+                <a href="#contact" class="block px-3 py-2 hover:bg-blue-700 rounded-lg transition-all">تماس با ما</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-16">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0 fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">جدیدترین موبایل‌ها با بهترین قیمت</h1>
+                <p class="text-xl mb-6">در فروشگاه ما، جدیدترین گوشی‌های موبایل از برندهای معتبر جهانی را پیدا کنید</p>
+                <a href="#products" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-all inline-block">مشاهده محصولات</a>
+            </div>
+            <div class="md:w-1/2 fade-in">
+                <img src="https://www.technolife.com/wp-content/uploads/2022/02/8_galaxya72_white_violet_blue_blackF.jpg" alt="موبایل های جدید" class="rounded-lg shadow-xl w-full max-w-md mx-auto">
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="products" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">محصولات ویژه</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden fade-in">
+                    <div class="relative">
+                        <img src="https://api2.zoomit.ir/media/652d0545eb21a6b54f5092ab?w=1920&q=75" alt="Samsung Galaxy S23" class="w-full h-56 object-cover">
+                        <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-lg">جدید</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">سامسونگ گلکسی S23</h3>
+                        <p class="text-gray-600 mb-4">گوشی هوشمند پرچمدار با دوربین فوق العاده</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">۲۹,۹۰۰,۰۰۰ تومان</span>
+                            <button class="add-to-cart bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all" data-id="1" data-name="سامسونگ گلکسی S23" data-price="29900000" data-image="https://cdn.pixabay.com/photo/2023/09/18/15/38/ai-generated-8261143_1280.jpg">
+                                <i class="fas fa-cart-plus ml-1"></i>
+                                افزودن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden fade-in">
+                    <div class="relative">
+                        <img src="https://api2.zoomit.ir/media/652d2111eb21a6b54f513480" alt="iPhone 15 Pro" class="w-full h-56 object-cover">
+                        <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-lg">پرفروش</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">آیفون 15 پرو</h3>
+                        <p class="text-gray-600 mb-4">تجربه iOS با بهترین عملکرد و طراحی</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">۴۵,۰۰۰,۰۰۰ تومان</span>
+                            <button class="add-to-cart bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all" data-id="2" data-name="آیفون 15 پرو" data-price="45000000" data-image="https://cdn.pixabay.com/photo/2023/11/13/14/52/ai-generated-8385543_1280.jpg">
+                                <i class="fas fa-cart-plus ml-1"></i>
+                                افزودن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden fade-in">
+                    <div class="relative">
+                        <img src="https://cdn.mobo.news/wp-content/uploads/2023/10/16152931/Xiaomi-13t-5g-color.jpg" alt="Xiaomi 13T" class="w-full h-56 object-cover">
+                        <span class="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded-lg">ارزان</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">شیائومی 13T</h3>
+                        <p class="text-gray-600 mb-4">گوشی میان‌رده با امکانات فوق‌العاده</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">۱۵,۷۰۰,۰۰۰ تومان</span>
+                            <button class="add-to-cart bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all" data-id="3" data-name="شیائومی 13T" data-price="15700000" data-image="https://cdn.pixabay.com/photo/2023/10/01/14/12/ai-generated-8288058_1280.jpg">
+                                <i class="fas fa-cart-plus ml-1"></i>
+                                افزودن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <a href="#" class="inline-block bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-lg transition-all">مشاهده همه محصولات</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">چرا فروشگاه ما؟</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center fade-in">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">ارسال سریع</h3>
+                    <p class="text-gray-600">ارسال رایگان برای خریدهای بالای ۲ میلیون تومان در کمتر از ۲۴ ساعت</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center fade-in">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">ضمانت اصالت</h3>
+                    <p class="text-gray-600">تمام محصولات ما دارای ضمانت اصالت و گارانتی معتبر هستند</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center fade-in">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">پشتیبانی 24/7</h3>
+                    <p class="text-gray-600">پشتیبانی همه روزه حتی در روزهای تعطیل برای پاسخگویی به شما</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">برندهای معتبر</h2>
+            
+            <div class="flex flex-wrap justify-center gap-8">
+                <div class="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center p-4 shadow-md">
+                    <img src="https://logoyab.com/wp-content/uploads/2024/05/samsung-logo-1030x1030.png" alt="Samsung" class="max-w-full max-h-full">
+                </div>
+                <div class="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center p-4 shadow-md">
+                    <img src="https://armcade.com/Portals/0/LOGO/Apple-Logo.png" alt="Apple" class="max-w-full max-h-full">
+                </div>
+                <div class="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center p-4 shadow-md">
+                    <img src="https://cdn.nody.ir/files/2024/07/01/nody-%D9%84%D9%88%DA%AF%D8%B4%D8%B1%DA%A9%D8%AA-%D8%B4%DB%8C%D8%A7%D8%A6%D9%88%D9%85%DB%8C-1719807860.png" alt="Xiaomi" class="max-w-full max-h-full">
+                </div>
+                <div class="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center p-4 shadow-md">
+                    <img src="https://dl.shut.ir/public/file/2023/9/11/%D9%84%D9%88%DA%AF%D9%88-%D9%87%D9%88%D8%A7%D9%88%DB%8C.png" alt="Huawei" class="max-w-full max-h-full">
+                </div>
+                <div class="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center p-4 shadow-md">
+                    <img src="https://fs.noorgram.ir/xen/2021/07/2285_34c85fcb07964c1a4a8152e7954890c7.png" alt="Google" class="max-w-full max-h-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">تماس با ما</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md fade-in">
+                    <h3 class="text-xl font-bold mb-4">اطلاعات تماس</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="text-blue-600 text-xl ml-2 mt-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">آدرس</h4>
+                                <p class="text-gray-600">تهران، خیابان ولیعصر، پلاک ۱۲۳۴</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="text-blue-600 text-xl ml-2 mt-1">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">تلفن</h4>
+                                <p class="text-gray-600">۰۲۱-۱۲۳۴۵۶۷۸</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="text-blue-600 text-xl ml-2 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">ایمیل</h4>
+                                <p class="text-gray-600">info@mobileshop.ir</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md fade-in">
+                    <h3 class="text-xl font-bold mb-4">فرم تماس</h3>
+                    <form>
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 mb-2">نام کامل</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 mb-2">ایمیل</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-700 mb-2">پیام</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-all w-full">ارسال پیام</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">موبایل‌شاپ</h3>
+                    <p class="text-gray-400">فروشگاه تخصصی موبایل با ارائه بهترین برندها و خدمات پس از فروش</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">لینک‌های سریع</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">خانه</a></li>
+                        <li><a href="#products" class="text-gray-400 hover:text-white transition-all">محصولات</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-all">درباره ما</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-all">تماس با ما</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">خدمات مشتریان</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">پرسش‌های متداول</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">رویه بازگرداندن کالا</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">شرایط استفاده</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-all">حریم خصوصی</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">ما را دنبال کنید</h3>
+                    <div class="flex space-x-3 space-x-reverse">
+                        <a href="#" class="bg-gray-700 hover:bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="bg-gray-700 hover:bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="bg-gray-700 hover:bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="bg-gray-700 hover:bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>© ۲۰۲۳ فروشگاه موبایل. تمام حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="auth-modal bg-white rounded-lg w-full max-w-md p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">ورود / ثبت‌نام</h3>
+                <button id="close-auth-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="auth-form">
+                <div class="mb-4">
+                    <label for="auth-email" class="block text-gray-700 mb-2">ایمیل</label>
+                    <input type="email" id="auth-email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="auth-password" class="block text-gray-700 mb-2">رمز عبور</label>
+                    <input type="password" id="auth-password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                
+                <div class="mb-4 flex items-center">
+                    <input type="checkbox" id="remember-me" class="ml-2">
+                    <label for="remember-me" class="text-gray-700">مرا به خاطر بسپار</label>
+                </div>
+                
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-all w-full">ورود</button>
+            </form>
+            
+            <div class="text-center mt-4">
+                <p class="text-gray-600">حساب کاربری ندارید؟ <a href="#" class="text-blue-600 hover:underline">ثبت‌نام کنید</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed inset-y-0 left-0 w-full md:w-96 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">سبد خرید</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="flex-grow overflow-y-auto mb-4">
+                <!-- Cart items will be added here dynamically -->
+                <div class="text-center py-8 text-gray-500" id="empty-cart-message">
+                    <i class="fas fa-shopping-cart text-4xl mb-4"></i>
+                    <p>سبد خرید شما خالی است</p>
+                </div>
+            </div>
+            
+            <div class="border-t pt-4">
+                <div class="flex justify-between mb-4">
+                    <span class="font-bold">جمع کل:</span>
+                    <span id="cart-total" class="font-bold">۰ تومان</span>
+                </div>
+                
+                <button id="checkout-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-all w-full">تکمیل سفارش</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 flex flex-col items-center">
+            <div class="loading-spinner"></div>
+            <p class="mt-4">لطفا منتظر بمانید...</p>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="fixed top-4 left-4 md:left-auto md:right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform -translate-y-16 transition-transform duration-300">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle ml-2"></i>
+            <span id="notification-text">محصول با موفقیت به سبد خرید اضافه شد</span>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const authBtn = document.getElementById('auth-btn');
+        const authModal = document.getElementById('auth-modal');
+        const closeAuthModal = document.getElementById('close-auth-modal');
+        const authForm = document.getElementById('auth-form');
+        const cartBtn = document.getElementById('cart-btn');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const closeCart = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const cartTotal = document.getElementById('cart-total');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const loadingOverlay = document.getElementById('loading');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
+
+        // Cart Data
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Mobile Menu Toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Auth Modal
+        authBtn.addEventListener('click', () => {
+            authModal.classList.remove('hidden');
+        });
+
+        closeAuthModal.addEventListener('click', () => {
+            authModal.classList.add('hidden');
+        });
+
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showLoading();
+            
+            // Simulate authentication process
+            setTimeout(() => {
+                hideLoading();
+                authModal.classList.add('hidden');
+                showNotification('با موفقیت وارد شدید');
+            }, 1500);
+        });
+
+        // Cart Sidebar
+        cartBtn.addEventListener('click', () => {
+            cartSidebar.classList.remove('translate-x-full');
+            updateCartDisplay();
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.add('translate-x-full');
+        });
+
+        // Add to Cart
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const price = parseInt(button.getAttribute('data-price'));
+                const image = button.getAttribute('data-image');
+                
+                // Check if product already in cart
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        image,
+                        quantity: 1
+                    });
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // Update cart count
+                updateCartCount();
+                
+                // Show notification
+                showNotification('محصول به سبد خرید اضافه شد');
+                
+                // Animate cart button
+                cartCount.classList.add('cart-notification');
+                setTimeout(() => {
+                    cartCount.classList.remove('cart-notification');
+                }, 500);
+            });
+        });
+
+        // Checkout
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showNotification('سبد خرید شما خالی است', 'error');
+                return;
+            }
+            
+            showLoading();
+            
+            // Simulate checkout process
+            setTimeout(() => {
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                updateCartDisplay();
+                hideLoading();
+                cartSidebar.classList.add('translate-x-full');
+                showNotification('سفارش شما با موفقیت ثبت شد');
+            }, 2000);
+        });
+
+        // Update cart count
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            // Clear cart items
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.appendChild(emptyCartMessage.cloneNode(true));
+                cartTotal.textContent = '۰ تومان';
+                return;
+            }
+            
+            // Calculate total
+            let total = 0;
+            
+            // Add items to cart
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'flex items-center py-4 border-b';
+                cartItemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
+                    <div class="mr-4 flex-grow">
+                        <h4 class="font-bold">${item.name}</h4>
+                        <p class="text-gray-600">${item.price.toLocaleString()} تومان</p>
+                    </div>
+                    <div class="flex items-center">
+                        <button class="decrease-quantity text-gray-500 hover:text-gray-700" data-id="${item.id}">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <span class="mx-2">${item.quantity}</span>
+                        <button class="increase-quantity text-gray-500 hover:text-gray-700" data-id="${item.id}">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                `;
+                
+                cartItems.appendChild(cartItemElement);
+            });
+            
+            // Update total
+            cartTotal.textContent = `${total.toLocaleString()} تومان`;
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    const item = cart.find(item => item.id === id);
+                    item.quantity += 1;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    updateCartDisplay();
+                });
+            });
+            
+            document.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    const item = cart.find(item => item.id === id);
+                    
+                    if (item.quantity > 1) {
+                        item.quantity -= 1;
+                    } else {
+                        cart = cart.filter(item => item.id !== id);
+                    }
+                    
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    updateCartDisplay();
+                });
+            });
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            notificationText.textContent = message;
+            
+            if (type === 'error') {
+                notification.classList.remove('bg-green-500');
+                notification.classList.add('bg-red-500');
+            } else {
+                notification.classList.remove('bg-red-500');
+                notification.classList.add('bg-green-500');
+            }
+            
+            notification.classList.remove('-translate-y-16');
+            
+            setTimeout(() => {
+                notification.classList.add('-translate-y-16');
+            }, 3000);
+        }
+
+        // Show loading
+        function showLoading() {
+            loadingOverlay.classList.remove('hidden');
+        }
+
+        // Hide loading
+        function hideLoading() {
+            loadingOverlay.classList.add('hidden');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            
+            // Add animations to elements on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
